@@ -6,6 +6,8 @@ public class WPMCalculator {
 	
 	private long lastTime = 0;
 	
+	private int wpm;
+	
 	private StringBuffer buffer = new StringBuffer();
 	
 	public void start() {
@@ -14,12 +16,16 @@ public class WPMCalculator {
 	
 	public void update() {
 		if (System.currentTimeMillis() - lastTime > 1_000 * 60) {
-			System.out.println("Minute");
-			int words = Utils.countWords(buffer.toString());
+			Log.info("Minute");
+			wpm = Utils.countWords(buffer.toString());
 			buffer.setLength(0);
-			System.out.println("WPM: " + words);
+			Log.info("WPM: " + getWPM());
 			lastTime = System.currentTimeMillis();
 		}
+	}
+	
+	public int getWPM() {
+		return wpm;
 	}
 
 	public void keyPressed(NativeKeyEvent e) {
